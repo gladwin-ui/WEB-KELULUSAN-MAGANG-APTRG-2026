@@ -281,7 +281,7 @@ function escapeHtml(str) {
    ------------------------------------------------------------ */
 
 /* Warna confetti mengikuti palet logo APTRG */
-const CONFETTI_COLORS = ["#00b4d8", "#33c4e0", "#e85d5d", "#b8b8b8", "#0d9b6e", "#0d1f2d"];
+const CONFETTI_COLORS = ["#e63946", "#ffffff", "#c1121f", "#ff6b6b", "#f8f9fa", "#1a1a2e"];
 
 function launchConfetti() {
   clearConfetti();

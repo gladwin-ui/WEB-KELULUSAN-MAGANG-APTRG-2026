@@ -1,9 +1,3 @@
-<<<<<<< HEAD
 opencv-python>=4.8.0
 numpy>=1.24.0
 imageio-ffmpeg>=0.4.9
-=======
-opencv-python>=4.8.0
-numpy>=1.24.0
-imageio-ffmpeg>=0.4.9
->>>>>>> 3889ed19acbbe31209042fc52b3d76a5ea2220d5
