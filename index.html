@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pengumuman Kelulusan Magang APTRG Laboratory 2026" />
+  <title>Pengumuman Kelulusan Magang — APTRG Laboratory 2026</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Background layers -->
+  <div class="bg-layer bg-image" aria-hidden="true"></div>
+  <div class="bg-layer bg-gradient" aria-hidden="true"></div>
+  <div class="bg-layer bg-pattern" aria-hidden="true"></div>
+
+  <!-- Confetti container (shown on Lulus) -->
+  <div id="confetti-container" class="confetti-container" aria-hidden="true"></div>
+
+  <!-- Victory video overlay (Lulus only — slides bottom → top) -->
+  <div id="victory-overlay" class="victory-overlay" hidden aria-hidden="true">
+    <div class="victory-slide-lane">
+      <video
+        class="victory-video"
+        src="assets/victory-dance.mp4"
+        muted
+        loop
+        playsinline
+        preload="auto"
+      ></video>
+      <video
+        class="victory-video victory-video--offset"
+        src="assets/victory-dance.mp4"
+        muted
+        loop
+        playsinline
+        preload="auto"
+      ></video>
+    </div>
+  </div>
+
+  <!-- Audio countdown (10→1, semua kelas hasil) -->
+  <audio id="celebration-audio" src="assets/celebration-sound.mp3" loop preload="auto"></audio>
+  <!-- Audio popup pengumuman Lulus -->
+  <audio id="lulus-reveal-audio" src="assets/celebration-sound1.mp3" preload="auto"></audio>
+
+  <!-- Countdown sebelum pengumuman hasil -->
+  <div id="countdown-overlay" class="countdown-overlay" hidden aria-live="assertive" aria-atomic="true">
+    <div class="countdown-card">
+      <p class="countdown-label">Pengumuman Hasil Dalam</p>
+      <div id="countdown-number" class="countdown-number" aria-label="Hitungan mundur">10</div>
+      <p class="countdown-hint">Mohon tunggu...</p>
+    </div>
+  </div>
+
+  <div class="app-wrapper">
+
+    <!-- ========== HEADER ========== -->
+    <header class="site-header">
+      <div class="logo-wrap">
+        <img
+          src="assets/media/logo-aptrg.png"
+          alt="Logo APTRG Laboratory"
+          class="logo-img"
+          width="88"
+          height="88"
+        />
+      </div>
+      <div class="header-text">
+        <p class="header-sub"><span class="brand-apt">apt</span><span class="brand-rg">rg</span> Laboratory</p>
+        <h1 class="header-title">Pengumuman Kelulusan Magang 2026</h1>
+      </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="main-content">
+
+      <!-- ----- STATE: INPUT (Landing) ----- -->
+      <section id="state-input" class="card state-panel is-active" aria-label="Form pengecekan NIM">
+        <div class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
+          </svg>
+        </div>
+
+        <h2 class="card-heading">Cek Hasil Kelulusan Magang</h2>
+        <p class="card-desc">Masukkan Nomor Induk Mahasiswa (NIM) Anda untuk melihat status kelulusan magang APTRG Laboratory tahun 2026.</p>
+
+        <form id="nim-form" class="nim-form" novalidate>
+          <label for="nim-input" class="form-label">Nomor Induk Mahasiswa (NIM)</label>
+          <input
+            type="text"
+            id="nim-input"
+            class="form-input"
+            placeholder="Contoh: 1202230001"
+            autocomplete="off"
+            inputmode="numeric"
+            maxlength="20"
+            required
+          />
+          <p id="input-error" class="input-error" role="alert" hidden></p>
+          <button type="submit" class="btn btn-primary" id="btn-cek">
+            <span class="btn-text">Cek Hasil</span>
+            <span class="btn-spinner" hidden aria-hidden="true"></span>
+          </button>
+        </form>
+      </section>
+
+      <!-- ----- STATE: LULUS (Class 1 — Success) ----- -->
+      <section id="state-lulus" class="card state-panel result-panel result--success" aria-label="Hasil: Lulus" hidden>
+        <div class="result-badge badge--success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+          </svg>
+          <span>LULUS</span>
+        </div>
+        <h2 class="result-title">Selamat! Anda Dinyatakan Lulus</h2>
+        <p class="result-nim-label">NIM</p>
+        <p class="result-nim" id="lulus-nim">—</p>
+        <p class="result-message">
+          Selamat karena kamu terpilih untuk menjadi regenerasi asisten APTRG Laboratory, di tingkatkan lagi semangatnya!
+        </p>
+
+        <button type="button" class="btn btn-outline btn-back" data-action="back">
+          Kembali
+        </button>
+      </section>
+
+      <!-- ----- STATE: LULUS BERSYARAT (Class 2 — Warning) ----- -->
+      <section id="state-bersyarat" class="card state-panel result-panel result--warning" aria-label="Hasil: Lulus Bersyarat" hidden>
+        <div class="result-badge badge--warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+          </svg>
+          <span>LULUS BERSYARAT</span>
+        </div>
+
+        <div class="result-icon result-icon--warning" aria-hidden="true">⚠️</div>
+        <h2 class="result-title">Lulus Bersyarat</h2>
+        <p class="result-nim-label">NIM</p>
+        <p class="result-nim" id="bersyarat-nim">—</p>
+        <p class="result-message">
+          Anda dinyatakan lulus bersyarat. Harap menyelesaikan persyaratan berikut sebelum batas waktu yang ditentukan.
+        </p>
+
+        <div class="notes-box" id="bersyarat-notes">
+          <h3 class="notes-title">Catatan Persyaratan</h3>
+          <p class="result-message">
+            Segera hubungi Koordinator Divisi masing masing 1x24 Jam!
+          </p>
+        </div>
+
+        <button type="button" class="btn btn-outline btn-back" data-action="back">
+          Kembali
+        </button>
+      </section>
+
+      <!-- ----- STATE: TIDAK LULUS (Class 3 — Danger) ----- -->
+      <section id="state-tidak-lulus" class="card state-panel result-panel result--danger" aria-label="Hasil: Tidak Lulus" hidden>
+        <div class="result-badge badge--danger">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <span>TIDAK LULUS</span>
+        </div>
+
+        <div class="result-icon result-icon--danger" aria-hidden="true">📋</div>
+        <h2 class="result-title">Belum Memenuhi Syarat Kelulusan</h2>
+        <p class="result-nim-label">NIM</p>
+        <p class="result-nim" id="tidaklulus-nim">—</p>
+        <p class="result-message">
+          Mohon maaf, berdasarkan evaluasi magang APTRG Laboratory 2026, Anda belum memenuhi
+          kriteria kelulusan pada periode ini. Kegagalan bukan akhir — gunakan pengalaman ini
+          sebagai fondasi untuk terus berkembang. Kami mendorong Anda untuk berkonsultasi dengan
+          pembimbing magang dan koordinator program untuk merencanakan langkah perbaikan ke depan.
+        </p>
+
+        <button type="button" class="btn btn-outline btn-back" data-action="back">
+          Kembali
+        </button>
+      </section>
+
+      <!-- ----- STATE: ERROR (NIM tidak terdaftar) ----- -->
+      <section id="state-error" class="card state-panel result-panel result--error" aria-label="NIM tidak terdaftar" hidden>
+        <div class="result-badge badge--error">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg>
+          <span>NIM TIDAK TERDAFTAR</span>
+        </div>
+
+        <div class="result-icon result-icon--error" aria-hidden="true">🔍</div>
+        <h2 class="result-title">NIM Tidak Ditemukan</h2>
+        <p class="result-message" id="error-message">
+          Nomor Induk Mahasiswa yang Anda masukkan tidak terdaftar dalam daftar peserta magang APTRG Laboratory 2026.
+          Pastikan NIM sudah benar atau hubungi koordinator magang.
+        </p>
+
+        <button type="button" class="btn btn-outline btn-back" data-action="back">
+          Kembali
+        </button>
+      </section>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="site-footer">
+      <p>&copy; 2026 APTRG Laboratory — Pengumuman Kelulusan Magang. Hak cipta dilindungi.</p>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+>>>>>>> 3889ed19acbbe31209042fc52b3d76a5ea2220d5

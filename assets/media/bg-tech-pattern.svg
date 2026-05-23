@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="bgMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0a"/>
+      <stop offset="45%" stop-color="#0d1f2d"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="cyanGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00b4d8" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00b4d8" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#00b4d8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="coralGlow" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e85d5d" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#e85d5d" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#e85d5d" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#00b4d8" stroke-width="0.5" opacity="0.12"/>
+    </pattern>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#c0c0c0" opacity="0.15"/>
+    </pattern>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1920" height="1080" fill="url(#bgMain)"/>
+  <rect width="1920" height="1080" fill="url(#grid)"/>
+  <rect width="1920" height="1080" fill="url(#dots)"/>
+
+  <!-- Ambient glow orbs -->
+  <ellipse cx="320" cy="280" rx="420" ry="320" fill="url(#cyanGlow)" opacity="0.6"/>
+  <ellipse cx="1580" cy="780" rx="480" ry="360" fill="url(#coralGlow)" opacity="0.55"/>
+
+  <!-- Geometric tech lines (diagonal X motif from logo) -->
+  <g opacity="0.18" stroke="#e85d5d" stroke-width="3" fill="none">
+    <line x1="0" y1="1080" x2="1920" y2="0"/>
+    <line x1="0" y1="0" x2="1920" y2="1080"/>
+  </g>
+
+  <!-- Hexagon clusters -->
+  <g fill="none" stroke="#00b4d8" stroke-width="1" opacity="0.2">
+    <polygon points="1600,120 1650,149 1650,207 1600,236 1550,207 1550,149"/>
+    <polygon points="200,900 250,929 250,987 200,1016 150,987 150,929"/>
+    <polygon points="960,540 1010,569 1010,627 960,656 910,627 910,569"/>
+  </g>
+
+  <!-- Circuit-style paths -->
+  <g fill="none" stroke="#00b4d8" stroke-width="1.5" opacity="0.25">
+    <path d="M 100 400 H 400 V 200 H 700"/>
+    <path d="M 1820 680 H 1520 V 880 H 1220"/>
+    <circle cx="700" cy="200" r="6" fill="#00b4d8" opacity="0.4"/>
+    <circle cx="1220" cy="880" r="6" fill="#00b4d8" opacity="0.4"/>
+  </g>
+
+  <!-- Telemetry waves -->
+  <g fill="none" stroke="#b8b8b8" stroke-width="1" opacity="0.2">
+    <path d="M 1400 400 Q 1450 360 1500 400 Q 1550 440 1600 400"/>
+    <path d="M 1400 420 Q 1460 370 1520 420 Q 1580 470 1640 420"/>
+    <path d="M 1400 440 Q 1470 380 1540 440 Q 1610 500 1680 440"/>
+  </g>
+
+  <!-- Subtle vignette -->
+  <rect width="1920" height="1080" fill="url(#bgMain)" opacity="0.35"/>
+</svg>

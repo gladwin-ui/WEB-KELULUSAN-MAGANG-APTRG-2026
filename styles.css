@@ -1,0 +1,658 @@
+/* ============================================================
+   APTRG Laboratory 2026 – Graduation Announcement
+   Solid brand colors (Blue & Red from logo) + Photo Background
+   ============================================================ */
+
+/* ---------- CSS Variables (Solid colors from logo) ---------- */
+:root {
+  --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* APTRG brand solid colors (from logo: blue & red) */
+  --color-blue: #00b8d9;
+  --color-blue-dark: #0096b8;
+  --color-red: #ff5a5f;
+  --color-red-dark: #e04e52;
+  --color-navy: #0a192f;
+  --color-navy-light: #112240;
+  --color-slate: #8892b0;
+  --color-slate-light: #ccd6f6;
+
+  /* Neutral & UI */
+  --color-white: #ffffff;
+  --color-black: #020c1a;
+  --color-gray-100: #f0f4f8;
+  --color-gray-300: #cbd5e1;
+  --color-gray-500: #64748b;
+  --color-gray-700: #334155;
+  --color-gray-900: #0f172a;
+
+  /* Status semantics */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: var(--color-red);
+
+  /* Spacing & effects */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  --transition-smooth: 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-navy);
+  color: var(--color-slate-light);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Background Layers (Photo + Overlay) ---------- */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+.bg-image {
+  background-image: url('assets/background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-gradient {
+  background: linear-gradient(
+    160deg,
+    rgba(10, 25, 47, 0.85) 0%,
+    rgba(2, 12, 26, 0.9) 100%
+  );
+  z-index: -1;
+}
+
+.bg-pattern {
+  display: none; /* tidak dipakai agar fokus ke foto */
+}
+
+/* ---------- Countdown overlay (10 → 1) ---------- */
+.countdown-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 12, 26, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.countdown-overlay[hidden] {
+  display: none !important;
+}
+
+.countdown-card {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-blue);
+  background: rgba(10, 25, 47, 0.92);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  min-width: min(320px, 90vw);
+}
+
+.countdown-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-slate);
+  margin-bottom: 0.75rem;
+}
+
+.countdown-number {
+  font-size: clamp(5rem, 22vw, 8rem);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-blue);
+  text-shadow:
+    0 0 40px rgba(0, 184, 217, 0.5),
+    0 4px 0 var(--color-red);
+  transition: transform 0.15s ease;
+}
+
+.countdown-number.countdown-pop {
+  transform: scale(1.12);
+  color: var(--color-white);
+}
+
+.countdown-hint {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--color-slate);
+}
+
+/* ---------- Victory video overlay (Lulus) ---------- */
+.victory-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.victory-overlay.is-active {
+  display: block;
+}
+
+.victory-slide-lane {
+  position: absolute;
+  inset: 0;
+}
+
+.victory-video {
+  position: absolute;
+  left: 50%;
+  width: min(520px, 78vw);
+  max-width: 640px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 20px;
+  opacity: 0.78;
+  filter:
+    contrast(1.55)
+    brightness(1.12)
+    saturate(1.2)
+    drop-shadow(0 12px 32px rgba(0, 0, 0, 0.45))
+    drop-shadow(0 0 20px rgba(0, 184, 217, 0.25));
+  transform: translateX(-50%);
+  animation: victorySlideUp 7s linear infinite;
+  will-change: top, opacity;
+}
+
+/* Second copy offset half-cycle for continuous flow */
+.victory-video--offset {
+  animation-delay: -3.5s;
+}
+
+@keyframes victorySlideUp {
+  0% {
+    top: 110%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.78;
+  }
+  92% {
+    opacity: 0.78;
+  }
+  100% {
+    top: -35%;
+    opacity: 0;
+  }
+}
+
+/* ---------- App Wrapper ---------- */
+.app-wrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+  gap: 2rem;
+}
+
+/* ---------- Header (Solid border) ---------- */
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 560px;
+  background: rgba(10, 25, 47, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 80px;
+  padding: 0.6rem 1.8rem 0.6rem 1.2rem;
+  border: 1px solid var(--color-blue);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.logo-wrap {
+  flex-shrink: 0;
+  background: var(--color-white);
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 0 0 2px var(--color-blue);
+}
+
+.logo-img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+  border-radius: 50%;
+  background: white;
+  padding: 4px;
+}
+
+.header-text {
+  flex: 1;
+}
+
+.header-sub {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-slate);
+}
+
+.brand-apt {
+  color: var(--color-blue);
+  font-weight: 800;
+}
+
+.brand-rg {
+  color: var(--color-red);
+  font-weight: 800;
+}
+
+.header-title {
+  font-size: clamp(1rem, 4vw, 1.35rem);
+  font-weight: 700;
+  color: var(--color-white);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.header-title::after {
+  content: '2026';
+  font-size: 0.7rem;
+  background: var(--color-red);
+  padding: 0.2rem 0.6rem;
+  border-radius: 40px;
+  font-weight: 700;
+}
+
+/* ---------- Main & Card (Glassmorphism solid border) ---------- */
+.main-content {
+  width: 100%;
+  max-width: 560px;
+  position: relative;
+  min-height: 480px;
+}
+
+.card {
+  background: rgba(17, 34, 64, 0.85);
+  backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-blue);
+  box-shadow: var(--shadow-card);
+  padding: 2rem 1.8rem;
+  transition: transform 0.2s ease;
+}
+
+/* Hapus pseudo-element gradasi border sebelumnya */
+.card::before {
+  display: none;
+}
+
+/* Panels transition */
+.state-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.98);
+  transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+              transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+              visibility 0.4s;
+  pointer-events: none;
+}
+
+.state-panel.is-active {
+  position: relative;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.state-panel.is-exiting {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.98);
+}
+
+/* ---------- Input Card ---------- */
+.card-icon svg {
+  width: 52px;
+  height: 52px;
+  stroke: var(--color-blue);
+  filter: drop-shadow(0 0 4px var(--color-blue));
+  margin-bottom: 0.5rem;
+}
+
+.card-heading {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-white);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.card-desc {
+  color: var(--color-slate);
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 1.8rem;
+}
+
+/* Form */
+.nim-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-blue);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: rgba(10, 25, 47, 0.8);
+  border: 1.5px solid var(--color-slate);
+  border-radius: var(--radius-sm);
+  color: var(--color-white);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all var(--transition-smooth);
+}
+
+.form-input:focus {
+  border-color: var(--color-blue);
+  box-shadow: 0 0 0 3px rgba(0, 184, 217, 0.3);
+  outline: none;
+  background: var(--color-navy);
+}
+
+.form-input.is-invalid {
+  border-color: var(--color-red);
+  box-shadow: 0 0 0 3px rgba(255, 90, 95, 0.3);
+}
+
+.input-error {
+  color: var(--color-red);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Buttons (solid colors, no gradient) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.6rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: var(--color-blue);
+  color: var(--color-white);
+  box-shadow: 0 4px 12px rgba(0, 184, 217, 0.3);
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background: var(--color-blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 184, 217, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--color-blue);
+  width: 100%;
+  margin-top: 1.5rem;
+  color: var(--color-blue);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 184, 217, 0.1);
+  border-color: var(--color-blue);
+  color: var(--color-blue);
+}
+
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Result Panels ---------- */
+.result-panel {
+  text-align: center;
+}
+
+.result-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.2rem;
+  border-radius: 60px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  margin-bottom: 1.2rem;
+}
+
+.result-badge svg {
+  width: 18px;
+  height: 18px;
+}
+
+.result-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  animation: bouncePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bouncePop {
+  0% { transform: scale(0.2); opacity: 0; }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.result-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  color: var(--color-white);
+}
+
+.result-nim-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: var(--color-slate);
+  letter-spacing: 0.1em;
+}
+
+.result-nim {
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-family: monospace;
+  letter-spacing: 0.02em;
+  color: var(--color-blue);
+  margin: 0.2rem 0 1rem;
+}
+
+.result-message {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--color-slate-light);
+}
+
+/* Success (Lulus) */
+.badge--success {
+  background: var(--color-blue);
+  color: white;
+}
+.result--success .result-nim {
+  color: var(--color-blue);
+}
+
+/* Warning (Bersyarat) */
+.badge--warning {
+  background: var(--color-warning);
+  color: white;
+}
+.result--warning .result-nim {
+  color: var(--color-warning);
+}
+.notes-box {
+  background: rgba(0, 0, 0, 0.3);
+  border-left: 3px solid var(--color-warning);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  text-align: left;
+  margin-top: 1.2rem;
+}
+.notes-title {
+  color: var(--color-warning);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Danger (Tidak Lulus) */
+.badge--danger {
+  background: var(--color-red);
+  color: white;
+}
+.result--danger .result-nim {
+  color: var(--color-red);
+}
+
+/* Error (Not Found) */
+.badge--error {
+  background: var(--color-navy-light);
+  border: 1px solid var(--color-blue);
+  color: var(--color-blue);
+}
+.result--error .result-nim {
+  color: var(--color-slate);
+}
+
+/* ---------- Confetti (solid colors) ---------- */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000;
+  overflow: hidden;
+}
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 8px;
+  height: 14px;
+  background: var(--color-blue);
+  opacity: 0;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--color-slate);
+  border-top: 1px solid var(--color-blue);
+  padding-top: 1rem;
+  width: 100%;
+  max-width: 560px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 520px) {
+  .app-wrapper {
+    padding: 1rem;
+  }
+  .card {
+    padding: 1.5rem;
+  }
+  .card-heading {
+    font-size: 1.3rem;
+  }
+  .logo-img {
+    width: 48px;
+    height: 48px;
+  }
+  .site-header {
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Reduced motion — hide sliding video, keep readable UI */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .victory-overlay,
+  .countdown-overlay {
+    display: none !important;
+  }
+>>>>>>> 3889ed19acbbe31209042fc52b3d76a5ea2220d5
+}
